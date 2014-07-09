@@ -11,21 +11,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shephertz.android.apphype.sdk.AppHypeAPI;
 import com.shephertz.android.apphype.sdk.AppHypeAPI.AppHypeListener;
-import com.shephertz.android.apphype.sdk.FullScreenAd;
 
 public class GameActivity extends Activity implements AppHypeListener {
 
 	RelativeLayout grid_view;
-	private char myTurn='X';
-	private char cmpTurn='0';
+	private char myTurn = 'X';
+	private char cmpTurn = '0';
 	private char[][] ARRAY = new char[3][3];
 
-	private TextView notificationTextView;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.game);
+		AppHypeAPI.setAppHypeListener(this);
+		AppHypeAPI
+				.intialize(
+						this,
+						"567852c9ee3feebe73959c23b51082535bd5e2e600a9e5e5ea69ef7c455bc7a6",
+						"64e28bbeee0b033f70699521993345a058172cf31addac64b4fc9ea30a1e74de");
+		AppHypeAPI.enableLogs();
+		AppHypeAPI.loadFullScreenAd();
+		AppHypeAPI.loadVideoAd();
+		init();
+
+	}
 
 	private void init() {
 		for (int i = 0; i < 3; i++) {
@@ -35,28 +48,9 @@ public class GameActivity extends Activity implements AppHypeListener {
 		}
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.game);
-		AppHypeAPI.setAppHypeListener(this);
-		AppHypeAPI
-		.intialize(
-				this,
-				"567852c9ee3feebe73959c23b51082535bd5e2e600a9e5e5ea69ef7c455bc7a6",
-				"64e28bbeee0b033f70699521993345a058172cf31addac64b4fc9ea30a1e74de");
-	AppHypeAPI.enableLogs();
-	AppHypeAPI.loadFullScreenAd();
-	AppHypeAPI.loadVideoAd();
-//		notificationTextView = (TextView) findViewById(R.id.status);
-//		notificationTextView.setText("Game Started");
-		init();
-
-	}
-
 	public void onCellClicked(View view) {
 		int no = getCellIndexFromView(view);
-		playGame(no/3,no%3);
+		playGame(no / 3, no % 3);
 	}
 
 	private int getCellIndexFromView(View view) {
@@ -87,13 +81,13 @@ public class GameActivity extends Activity implements AppHypeListener {
 	private void playGame(int i, int j) {
 
 		if (ARRAY[i][j] == '-') {
-			ARRAY[i][j] =myTurn;
+			ARRAY[i][j] = myTurn;
 			updateUI(i, j, myTurn);
 			completeComputerTurn();
 		}
 		handleGameOver();
 	}
-	
+
 	private void completeComputerTurn() {
 		// check empty space
 		if (!Util.hasEmptyPlace(ARRAY)) {
@@ -111,14 +105,15 @@ public class GameActivity extends Activity implements AppHypeListener {
 		String s = list.get(new Random().nextInt(list.size()));
 		int i = Integer.parseInt(s.substring(0, s.indexOf('-')));
 		int j = Integer.parseInt(s.substring(s.indexOf('-') + 1, s.length()));
-			updateUI(i, j,cmpTurn);
-	
+		updateUI(i, j, cmpTurn);
+
 	}
 
 	private void updateUI(int index, int j, char ch) {
 		setupButton(ch,
-				(ImageButton) this.findViewById(getImageId(index*3+j)));
+				(ImageButton) this.findViewById(getImageId(index * 3 + j)));
 	}
+
 	private int getImageId(int index) {
 		switch (index) {
 		case 0:
@@ -144,12 +139,13 @@ public class GameActivity extends Activity implements AppHypeListener {
 	}
 
 	private void setupButton(char boardTile, ImageButton button) {
-		 if (boardTile =='X') {
+		if (boardTile == 'X') {
 			button.setImageResource(R.drawable.cross_cell);
 		} else {
 			button.setImageResource(R.drawable.circle_cell);
 		}
 	}
+
 	private void handleGameOver() {
 		char r = Util.checkForWin(ARRAY);
 		if (r != '-') {
@@ -159,7 +155,7 @@ public class GameActivity extends Activity implements AppHypeListener {
 
 			} else {
 				displayAd(false);
-			 showResultDialog("Oops, You Loose");
+				showResultDialog("Oops, You Loose");
 
 			}
 		}
