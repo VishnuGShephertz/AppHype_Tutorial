@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/game_background"
+    android:orientation="vertical" >
+
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:id="@+id/tableLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/lines" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp" >
+
+                    <ImageButton
+                        android:id="@+id/cell_00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tableRow1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp" >
+
+                    <ImageButton
+                        android:id="@+id/cell_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tableRow2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp" >
+
+                    <ImageButton
+                        android:id="@+id/cell_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+
+                    <ImageButton
+                        android:id="@+id/cell_22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:onClick="onCellClicked"
+                        android:src="@drawable/empty_cell"
+                        android:state_enabled="false" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
