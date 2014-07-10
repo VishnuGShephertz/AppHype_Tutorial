@@ -31,8 +31,8 @@ public class GameActivity extends Activity implements AppHypeListener {
 		AppHypeAPI
 				.intialize(
 						this,
-						"567852c9ee3feebe73959c23b51082535bd5e2e600a9e5e5ea69ef7c455bc7a6",
-						"64e28bbeee0b033f70699521993345a058172cf31addac64b4fc9ea30a1e74de");
+						"38f81f40df1e56c2e2acac924ffe0147022fcb5590aeb8701b46345719264835",
+						"393b76768b24d4a0770c000a216dc5c2a8172a65a7436a5b7d148c41d9e7f39c");
 		AppHypeAPI.enableLogs();
 		AppHypeAPI.loadFullScreenAd();
 		AppHypeAPI.loadVideoAd();
