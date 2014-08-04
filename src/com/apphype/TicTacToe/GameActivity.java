@@ -1,8 +1,5 @@
 package com.apphype.TicTacToe;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,39 +8,57 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shephertz.android.apphype.sdk.AppHypeAPI;
-import com.shephertz.android.apphype.sdk.AppHypeAPI.AppHypeListener;
+import com.shephertz.android.apphype.sdk.AppHype;
+import com.shephertz.android.apphype.sdk.AppHype.AppHypeListener;
+import com.shephertz.android.apphype.util.AdCode;
 
 public class GameActivity extends Activity implements AppHypeListener {
 
 	RelativeLayout grid_view;
-	private char myTurn = 'X';
-	private char cmpTurn = '0';
-	private char[][] ARRAY = new char[3][3];
+	private char myPlayer = 'X';
+	private char cmpPlayer = '0';
+	private char currentPlayer;
+	private TextView turnText;
+	private char[][] gameBoard = new char[3][3];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
-		AppHypeAPI.setAppHypeListener(this);
-		AppHypeAPI
-				.intialize(
-						this,
-						"38f81f40df1e56c2e2acac924ffe0147022fcb5590aeb8701b46345719264835",
-						"393b76768b24d4a0770c000a216dc5c2a8172a65a7436a5b7d148c41d9e7f39c");
-		AppHypeAPI.enableLogs();
-		AppHypeAPI.loadFullScreenAd();
-		AppHypeAPI.loadVideoAd();
+		turnText=(TextView)findViewById(R.id.turn_text);
 		init();
+		AppHype.setAppHypeListener(this);
+		AppHype.intialize(
+				this,
+				"Your API Key",
+				"Your Secret Key");
+		AppHype.enableLogs();
+		AppHype.preLoadAd(AdCode.Video);
+		AppHype.preLoadAd(AdCode.Interstitial);
+		
 
 	}
+	
 
+	private void updateStatus(){
+		if(currentPlayer==myPlayer){
+			turnText.setText("Play Your Turn");
+		}
+		else{
+			turnText.setText("Play Computer Turn");
+		}
+		
+	}
 	private void init() {
+		currentPlayer=myPlayer;
+		updateStatus();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				ARRAY[i][j] = '-';
+				gameBoard[i][j] = '-';
+				((ImageButton) this.findViewById(getImageId(i * 3 + j))).setImageResource(R.drawable.empty_cell);
 			}
 		}
 	}
@@ -77,40 +92,34 @@ public class GameActivity extends Activity implements AppHypeListener {
 		}
 		return 0;
 	}
+	private void updateTurn(){
+		if(currentPlayer==cmpPlayer){
+			currentPlayer=myPlayer;
+		}
+		else{
+			currentPlayer=cmpPlayer;
+		}
+		updateStatus();
+	}
 
 	private void playGame(int i, int j) {
 
-		if (ARRAY[i][j] == '-') {
-			ARRAY[i][j] = myTurn;
-			updateUI(i, j, myTurn);
-			completeComputerTurn();
+		if (gameBoard[i][j] == '-') {
+			gameBoard[i][j] = currentPlayer;
+			updateUI(i, j);
 		}
+		if(Util.hasEmptyPlace(gameBoard)){
 		handleGameOver();
-	}
-
-	private void completeComputerTurn() {
-		// check empty space
-		if (!Util.hasEmptyPlace(ARRAY)) {
-			showResultDialog("Match Draw");
-			return;
+		updateTurn();
 		}
-		ArrayList<String> list = new ArrayList<String>();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (ARRAY[i][j] == '-') {
-					list.add(i + "-" + j);
-				}
-			}
+		else{
+			displayAd(true);
+			showResultDialog("Game is Drawn");
 		}
-		String s = list.get(new Random().nextInt(list.size()));
-		int i = Integer.parseInt(s.substring(0, s.indexOf('-')));
-		int j = Integer.parseInt(s.substring(s.indexOf('-') + 1, s.length()));
-		updateUI(i, j, cmpTurn);
-
 	}
-
-	private void updateUI(int index, int j, char ch) {
-		setupButton(ch,
+	
+	private void updateUI(int index, int j) {
+		setupButton(currentPlayer,
 				(ImageButton) this.findViewById(getImageId(index * 3 + j)));
 	}
 
@@ -147,9 +156,9 @@ public class GameActivity extends Activity implements AppHypeListener {
 	}
 
 	private void handleGameOver() {
-		char r = Util.checkForWin(ARRAY);
+		char r = Util.checkForWin(gameBoard);
 		if (r != '-') {
-			if (r == myTurn) {
+			if (r == myPlayer) {
 				displayAd(true);
 				showResultDialog("Congrats, You Win");
 
@@ -163,18 +172,19 @@ public class GameActivity extends Activity implements AppHypeListener {
 
 	private void displayAd(boolean isWon) {
 		if (isWon) {
-			if (AppHypeAPI.isVideoAvailable()) {
-				AppHypeAPI.showVideoAd(this);
-			} else if (AppHypeAPI.isFullScreenAvailable()) {
+			if (AppHype.isAvailable(AdCode.Video)) {
+				AppHype.showAd(this, AdCode.Video);
+			} else if (AppHype.isAvailable(AdCode.Interstitial)) {
 
-				AppHypeAPI.showFullScreenAd(this);
+				AppHype.showAd(this, AdCode.Interstitial);
 			}
 		} else {
-			if (AppHypeAPI.isFullScreenAvailable()) {
+			if (AppHype.isAvailable(AdCode.Interstitial)) {
 
-				AppHypeAPI.showFullScreenAd(this);
-			} else if (AppHypeAPI.isVideoAvailable()) {
-				AppHypeAPI.showVideoAd(this);
+				AppHype.showAd(this, AdCode.Interstitial);
+			}
+			if (AppHype.isAvailable(AdCode.Video)) {
+				AppHype.showAd(this, AdCode.Video);
 			}
 		}
 	}
@@ -185,13 +195,14 @@ public class GameActivity extends Activity implements AppHypeListener {
 		builder.setMessage(message).setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						onBackPressed();
+						init();
 					}
 				});
 		AlertDialog alert = builder.create();
 		alert.show();
 
 	}
+	
 
 	@Override
 	public void onAdAvailable(String tag) {
@@ -234,9 +245,9 @@ public class GameActivity extends Activity implements AppHypeListener {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (AppHypeAPI.isFullScreenAvailable() && notify) {
-					System.out.println("FullScreen Ad is available");
-				} else if (AppHypeAPI.isVideoAvailable() && notify) {
+				if (AppHype.isAvailable(AdCode.Interstitial) && notify) {
+					System.out.println("Interstitial Ad is available");
+				} else if (AppHype.isAvailable(AdCode.Video) && notify) {
 					System.out.println("Video Ad is available");
 				}
 			}

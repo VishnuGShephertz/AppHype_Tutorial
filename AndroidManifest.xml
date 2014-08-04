@@ -39,7 +39,7 @@
         </receiver>
 
         <activity
-            android:name="com.shephertz.android.apphype.sdk.FullScreenAdActivity"
+            android:name="com.shephertz.android.apphype.sdk.InterstitialAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize" />
         <activity
             android:name="com.shephertz.android.apphype.sdk.VideoAdActivity"
