@@ -9,8 +9,8 @@ AppHypeSDK
 
 # Running Ad Sample
 
-1. [Register](http://50.112.109.96:8080/login) with AppHype platform.
-2. If you are already registered, login to [AppHype] (http://50.112.109.96:8080/login/index).
+1. [Register](http://apphype.shephertz.com/login) with AppHype platform.
+2. If you are already registered, login to [AppHype] (http://apphype.shephertz.com/login/index).
 3. 3. After you have successfully logged in, create an Android App by entering app details.
 4. Download  AppHype Android [SDK] (https://github.com/VishnuGShephertz/AppHypeSDK/tree/AppHype-Version-1.0/archive/master.zip)
 5. Import the Sample Application in Eclipse from SDK.
@@ -88,8 +88,8 @@ AppHype.restrictAd(restricLaunch);
 __8 Load Ad__ You can request Ad by using the following code.
 
 ```
-AppHype.loadAd(AdCode.Interstitial);
-AppHype.loadAd(AdCode.Video);
+AppHype.preLoadAd(AdCode.Interstitial);
+AppHype.preLoadAd(AdCode.Video);
 
 ```
 __9 Show Ad__ If you want to show it on an event then you can use the following code.
