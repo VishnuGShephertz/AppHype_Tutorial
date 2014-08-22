@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shephertz.android.apphype.connector.AppHypeException;
 import com.shephertz.android.apphype.sdk.AppHype;
 import com.shephertz.android.apphype.sdk.AppHype.AppHypeListener;
 import com.shephertz.android.apphype.util.AdCode;
@@ -203,60 +203,59 @@ public class GameActivity extends Activity implements AppHypeListener {
 
 	}
 	
-
 	@Override
-	public void onAdAvailable(String tag) {
-		displayMessage(true);
+	public void onAdAvailable(AdCode adcode) {
+		String message="onAdAvailable :  ";
+		if(adcode==AdCode.Interstitial)
+			message+="Interstitial Ad is Available";
+		else if(adcode==AdCode.Video)
+			message+="Video Ad is Available";
+		displayMessage(message);
 	}
 
 	@Override
-	public void onShow(String tag) {
-		displayMessage(false);
+	public void onShow(AdCode adcode) {
+		String message="onShow :  ";
+		if(adcode==AdCode.Interstitial)
+			message+="Interstitial Ad is showing";
+		else if(adcode==AdCode.Video)
+			message+="Video Ad is showing";
+		displayMessage(message);
 	}
 
 	@Override
-	public void onHide(String tag) {
+	public void onHide(AdCode adcode) {
+		String message="onHide :  ";
+		if(adcode==AdCode.Interstitial)
+			message+="Interstitial Ad is Hide";
+		else if(adcode==AdCode.Video)
+			message+="Video Ad is Hide";
+		displayMessage(message);
 	}
 
 	@Override
-	public void onFailedToShow(String tag) {
-		displayError("Failed to show Ads");
+	public void onFailedToShow(AppHypeException appHypeEx) {
+		displayMessage("onFailedToShow :  "+appHypeEx.toString());
 	}
 
 	@Override
-	public void onIntegrationError(String error) {
-		// TODO Auto-generated method stub
-		Log.d("AppHype-Error", error);
-		displayError(error);
+	public void onIntegrationError(AppHypeException appHypeEx) {
+		displayMessage("onFailedToShow :  "+appHypeEx.toString());
 
 	}
-
-	private void displayError(final String error) {
-		runOnUiThread(new Runnable() {
+	@Override
+	public void onFailedToLoad(AppHypeException appHypeEx) {
+		displayMessage("onFailedToLoad :  "+appHypeEx.toString());
+	}
+private void displayMessage(final String error) {
+		
+		GameActivity.this.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				Toast.makeText(GameActivity.this, error, Toast.LENGTH_SHORT)
-						.show();
+				.show();
 			}
 		});
 	}
-
-	private void displayMessage(final Boolean notify) {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (AppHype.isAvailable(AdCode.Interstitial) && notify) {
-					System.out.println("Interstitial Ad is available");
-				} else if (AppHype.isAvailable(AdCode.Video) && notify) {
-					System.out.println("Video Ad is available");
-				}
-			}
-		});
-	}
-
-	@Override
-	public void onFailedToLoad(String arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	
 }
