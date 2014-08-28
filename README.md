@@ -5,7 +5,11 @@ AppHypeSDK
 
 1. This sample show how can easily we can integrate AppHype Ad SDK in our existing Game.
 2. In This sample we have integrated AppHype SDK in TicTacToe Game.
-3. In This game we are shoing AppHype FullScreen as well as Video Ad as per game request.
+3. AppHype Opens an easy gateway for Android developers to serve a quality Video & FullScreen Ads
+4. Leads a developer to earn stacks of money by serving a targeted ad that a user wants to see
+5. Offers a solution to the Advertiser by showcasing their Ads to an app user
+6. Read complete [API Documentation](http://apphype.shephertz.com/docs) on AppHype Ad Network Guide
+7. A complete [Turtorial](http://apphype.shephertz.com/tutorial-android), How you can integrate it in your Existing Android Application
 
 # Running Ad Sample
 
@@ -20,79 +24,91 @@ AppHypeSDK
 A. Replace Apphype-Api-Keys and Apphype-Secret-Keys that you have received in step 2 or 3 at line number 34 and 35.
 
 ```
-6. Build your Android Application and run it on your device.
-7. Now, you will be able to see Ads in your Sample Application by making an Ad request
+# Running  Sample
 
-# Android AppHype SDK Integration
-
-_
-__1 Download AppHype [SDK] (https://github.com/VishnuGShephertz/AppHypeSDK/tree/AppHype-Version-1.0/archive/master.zip)__
-
-
-__2 Modify Android Manifest__ Chnage the Application package name with the App Package you have created on AppHype Console on Above Step.
-Add permissions 
+1. [Register/Login](http://apphype.shephertz.com/login) to use AppHype.
+2. After signing up, create App(s) that you want to promote by submitting App's package name on  [Create App ](http://apphype.shephertz.com/app/apps#/addApp)page.
+3. Create [Cross Promotion Campaign ](http://apphype.shephertz.com/app/apps#/createPromo)of the added App(s) to promote it in other App(s) 
+4. Now, create another App(s) by adding it on [Create App ](http://apphype.shephertz.com/app/apps#/addApp)in which you wish to cross promote
+5. You will get [Application Keys](http://apphype.shephertz.com/app/apps#/all) after App creation for SDK integration, which will be needed to initialize AppHype SDK
+6. Download [Tutorial] (https://github.com/VishnuGShephertz/AppHype_Tutorial/archive/master.zip) with Sample Application
+7. Import application in your IDE e.g Eclipse
+8. Change package name of Application with your application package name created in step 4 
+9. Put your API and Secret Key of the App created in step 4 in GameActivity.java file, generated in step 5 at line no 24.
 ```
- <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+A. Replace Apphype-Api-Keys and Apphype-Secret-Keys that you have received in step 2 or 3 at line number 34 and 35.
+
 ```
 
-Add Activities
+10. Build your Android application and install it in your device
+11. After Game complete you are able to see AppHype Ad.
 
-```
-  <activity android:name="com.shephertz.android.apphype.sdk.InterstitialAdActivity" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize" />
-        <activity android:name="com.shephertz.android.apphype.sdk.VideoAdActivity" android:screenOrientation="landscape"
-             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize" />
-```
-Add Receiver
+# To use AppHype SDK in existing Android Application
 
-```
- <receiver android:name="com.shephertz.android.apphype.sdk.AppHypeReceiver">
-            <intent-filter>
-                <data android:scheme="package"/>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-            </intent-filter>
-        </receiver>
-```
+1. Download  [AppHype Android SDK] (https://github.com/VishnuGShephertz/AppHypeSDK/tree/AppHype-Version-1.0/archive/master.zip)
 
-__3 Intialize AppHype SDK__ At your Launcher Activty intialize AppHype SDK by providing your Api and Secret key.If you want to receive a CallBack event implement AppHypeListener during intialization 
-```
-AppHype
-			.intialize(
-					this,
-					"Apphype Api Key",
-					"Apphype Secret Key");
-```
+2. Add apphype.jar and android-support-v4.jar in your application
+
+3. In AndroidManifest.xml file, package name of your App and the App added on AppHype in which you wish to cross promote should be same
+
+3.Copy the code given below in your AndroidManifest.xml
 
 
-__4 Enable Logs__ While integrating AppHype Sdk you can also enable Sdk logs.
+```
+		/Add Android Permissions
+		<uses-permission android:name="android.permission.INTERNET"/> 
+                <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+                <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
+                <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	
+         //Add Android Activities
+    <activity android:name="com.shephertz.android.apphype.sdk.InterstitialAdActivity						android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"/>
+    <activity android:name="com.shephertz.android.apphype.sdk.VideoAdActivity"
+     android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"
+    android:screenOrientation="landscape" />
+	
+    //Add Android Receiver
+    <receiver android:name="com.shephertz.android.apphype.sdk.AppHypeReceiver">
+        <intent-filter>
+            <data android:scheme="package" />
+            <action android:name="android.intent.action.PACKAGE_ADDED" />
+        </intent-filter>
+    </receiver>
+```
+
+
+4. Initialize AppHype SDK with the application Keys of the App in which you are cross promoting
+```
+AppHype.intialize("Android application context","Apphype Api Key","Apphype Secret Key");
+```
+
+5. To enable logs in application
 
 ```
 AppHype.enableLogs();
 
 ```
-__5 Set AppHypeListener__ AppHype allow to handle callback event by adding AppHypeListener.
+6. To handle callBack events from AppHype SDK developer should set AppHypeListener
 
 ```
 AppHype.setAppHypeListener(appHypeLister);
 
 ```
 
-__7 Restrict Ad in Application__ You can also set maximum no. of application launch till you don’t want any Ad. This is an interesting feature to engage users in your app.
+7. Developer can put restrictions on when to show ads in App(s)
 ```
 AppHype.restrictAd(restricLaunch);
 
 ```
 
-__8 Load Ad__ You can request Ad by using the following code.
+8. To show ads in application, developer has to preLoad them e.g Video or Interstitial
 
 ```
 AppHype.preLoadAd(AdCode.Interstitial);
 AppHype.preLoadAd(AdCode.Video);
 
 ```
-__9 Show Ad__ If you want to show it on an event then you can use the following code.
+9. Developer can show ads in application only if, they are available.
 
 ```
   if(AppHype.isAvailable(AdCode.Interstitial))
@@ -101,38 +117,33 @@ __9 Show Ad__ If you want to show it on an event then you can use the following 
 		AppHype.showAd(activity,AdCode.Video);
 				
 ```
-__10 Close Ad__  If you want to close this by using Api you can use following code.
+10. Developer can close Ad with API as well
 
 ```
-
 	AppHype.closeAd();
-				
 ```
 
 			
-__11 Handling AppHype Callback Events__ If you want to track an event or a message from SDK, you can add AppHypeLisener and gets callBack in following method.
+_11. If you want to track an event or a message from SDK, you can add AppHypeLisener and gets callBack in following method.
 ``` 
     public interface AppHypeListener
    //Callback when Ad is shown
-    public void onShow(String paramString);
+    public void onShow(AdCode adCode);
 
     //Callback when Ad is hide
-        public void onHide(String paramString);
+        public void onHide(AdCode adCode);
 
    //Callback when Ad is Failed to show
-        public void onFailedToShow(String paramString);
+        public void onFailedToShow(AppHypeException appHypeEx);
 
      //Callback when Ad is Available and you can call show function to implement Auto Show here
-        public void onAdAvailable(String paramString);
+        public void onAdAvailable(AdCode adCode);
 
     //Callback when Ad Failed to Load
-        public abstract void onFailedToLoad(String paramString);
+        public abstract void onFailedToLoad(AppHypeException appHypeEx);
 
-    //CallBack when there is SDK integration errors
-        public void onIntegrationError(String error);
+    //CallBack when there is SDK integration exception
+        public void onIntegrationError(AppHypeException appHypeEx);
 }
 				
 ```
-
-
-
