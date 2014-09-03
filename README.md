@@ -30,7 +30,7 @@ A. Replace Apphype-Api-Keys and Apphype-Secret-Keys that you have received
 3. Create [Cross Promotion Campaign ](http://apphype.shephertz.com/app/apps#/createPromo)of the added App(s) to promote it in other App(s) 
 4. Now, create another App(s) by adding it on [Create App ](http://apphype.shephertz.com/app/apps#/addApp)in which you wish to cross promote
 5. You will get [Application Keys](http://apphype.shephertz.com/app/apps#/all) after App creation for SDK integration, which will be needed to initialize AppHype SDK
-6. Download [Tutorial] (https://github.com/VishnuGShephertz/AppHype_Tutorial/archive/master.zip) with Sample Application
+6.  [Download Tutorial] (https://github.com/VishnuGShephertz/AppHype_Tutorial/archive/master.zip) with Sample Application
 7. Import application in your IDE e.g Eclipse
 8. Change package name of Application with your application package name created in step 4 
 9. Put your API and Secret Key of the App created in step 4 in GameActivity.java file, generated in step 5
@@ -44,7 +44,7 @@ A. Replace Apphype-Api-Keys and Apphype-Secret-Keys that you have received
 
 # To use AppHype SDK in existing Android Application
 
-1. Download  [AppHype Android SDK] (https://github.com/VishnuGShephertz/AppHypeSDK/tree/AppHype-Version-1.0/archive/master.zip)
+1. Download  [AppHype Android SDK] (https://github.com/VishnuGShephertz/AppHypeSDK/archive/AppHype-Version-1.0.zip)
 
 2. Add apphype.jar and android-support-v4.jar in your application
 
